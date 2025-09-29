@@ -63,4 +63,18 @@ module.exports = {
       [FuseV1Options.OnlyLoadAppFromAsar]: true,
     }),
   ],
+    publishers: [
+        {
+            "name": "@electron-forge/publisher-github",
+            "config": {
+                "repository": {
+                    "owner": "julienPajot11",
+                    "name": "electonjs-demo"
+                },
+                "prerelease": false,
+                "draft": true
+            }
+        }
+    ]
 };
+
