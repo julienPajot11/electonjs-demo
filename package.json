@@ -11,9 +11,9 @@
     "electron": "electron ."
   },
   "keywords": [],
-  "author": "moi",
+  "author": "julienPajot",
   "license": "ISC",
-  "description": "titi",
+  "description": "CRUD App to test electron",
   "devDependencies": {
     "@electron-forge/cli": "^7.9.0",
     "@electron-forge/maker-deb": "^7.9.0",
