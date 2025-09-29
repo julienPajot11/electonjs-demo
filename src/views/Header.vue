@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+import router from "../router/index.js";
 
 const route = useRoute()
 
@@ -14,6 +15,11 @@ const breadcrumb = computed(() => {
 
   return crumbs
 })
+
+const logout = () => {
+  localStorage.removeItem('token') // Supprime le token
+  router.push('/') // Redirection vers la page Login
+}
 </script>
 
 <template>
@@ -35,6 +41,15 @@ const breadcrumb = computed(() => {
             <span v-if="index < breadcrumb.length - 1" class="breadcrumb-separator"> > </span>
           </span>
           </nav>
+        </div>
+
+        <div class="uk-width-auto">
+          <button
+              @click="logout"
+              class="uk-button uk-button-danger uk-border-pill"
+          >
+            Déconnexion
+          </button>
         </div>
 
       </div>

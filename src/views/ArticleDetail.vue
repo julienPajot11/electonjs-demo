@@ -18,6 +18,8 @@ const editForm = ref({
   author: '',
 })
 
+const showDeleteModal = ref(false)
+
 const fetchArticleDetail = async () => {
   try {
     const response = await axios.get(`http://localhost:3000/articles/${route.params.id}`)
@@ -61,13 +63,12 @@ const saveArticle = async () => {
   }
 }
 
-const deleteArticle = async () => {
-  if (!confirm('Voulez-vous vraiment supprimer cet article ?')) return;
-
+const confirmDeleteArticle = async () => {
   try {
     const response = await axios.delete(`http://localhost:3000/articles/${article.value.id}`)
 
     if (response.data.code === "200") {
+      showDeleteModal.value = false
       await router.push('/Articles')
     } else {
       message.value = response.data.message || "Erreur lors de la suppression"
@@ -108,7 +109,7 @@ onMounted(fetchArticleDetail)
             <span uk-icon="icon: pencil"></span>
           </button>
 
-          <button class="uk-button uk-button-danger" @click="deleteArticle">
+          <button class="uk-button uk-button-danger" @click="showDeleteModal = true">
             <span uk-icon="icon: trash"></span>
           </button>
         </div>
@@ -145,6 +146,16 @@ onMounted(fetchArticleDetail)
       </div>
 
     </div>
+    <div v-if="showDeleteModal" class="modal-overlay">
+      <div class="modal-content">
+        <h3>Supprimer l'article</h3>
+        <p>Êtes-vous sûr de vouloir supprimer cet article ? Cette action est irréversible.</p>
+        <div class="uk-flex uk-flex-right uk-margin-top">
+          <button class="uk-button uk-button-default uk-margin-small-right" @click="showDeleteModal = false">Annuler</button>
+          <button class="uk-button uk-button-danger" @click="confirmDeleteArticle">Confirmer</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -152,5 +163,35 @@ onMounted(fetchArticleDetail)
 .article-image {
   max-width: 100%;
   height: auto;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h3 {
+  margin: 0 0 10px;
+}
+
+.modal-content p {
+  margin-bottom: 20px;
 }
 </style>
