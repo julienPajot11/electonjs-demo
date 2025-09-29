@@ -31,7 +31,7 @@ const login = async (e) => {
     }
   } catch (error) {
     console.error('Erreur de connexion:', error)
-    alert('Identifiants incorrects ou erreur serveur.')
+    showMessage(response.data.message || 'Erreur lors de la connexion', 'error')
   }
 }
 </script>

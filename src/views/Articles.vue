@@ -22,11 +22,11 @@ const fetchArticles = async () => {
     if (response.data.code === "200") {
       articles.value = response.data.data
     } else {
-      alert('Erreur lors de la récupération des articles')
+      showMessage(response.data.message || 'Erreur lors de la récupération', 'error')
     }
   } catch (error) {
     console.error('Erreur API:', error)
-    alert('Impossible de charger les articles')
+    showMessage(response.data.message || 'Erreur lors de la récupération', 'error')
   }
 }
 
@@ -57,7 +57,7 @@ const addArticle = async () => {
     }
   } catch (error) {
     console.error('Erreur API:', error)
-    showMessage('Erreur serveur lors de la création de l\'article', 'error')
+    showMessage('Erreur serveur lors de la création', 'error');
   }
 }
 onMounted(fetchArticles)
